@@ -1,7 +1,7 @@
 package com.photoapp.user.api.photoappuserapi.service;
 
-import com.photoapp.user.api.photoappuserapi.Shared.UserDto;
+import com.photoapp.user.api.photoappuserapi.shared.UserDto;
 
-public interface UsersService {
+public interface UserService {
     UserDto createUser(UserDto userDetails);
 }

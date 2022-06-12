@@ -1,19 +1,10 @@
-package com.photoapp.user.api.photoappuserapi.models;
+package com.photoapp.user.api.photoappuserapi.ui.models;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-public class CreateUserRequestModel {
-    @NotNull(message = "First Name cannot be null")
+public class CreateUserResponseModel {
     private String firstName;
-    @NotNull
-    @Size(min = 2)
     private String lastName;
-    @NotNull
-    @Email
     private String email;
-    private String password;
+    private String userId;
 
     public String getFirstName() {
         return firstName;
@@ -39,12 +30,12 @@ public class CreateUserRequestModel {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
 }

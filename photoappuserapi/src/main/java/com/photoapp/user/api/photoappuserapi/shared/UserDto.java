@@ -1,39 +1,16 @@
-package com.photoapp.user.api.model;
+package com.photoapp.user.api.photoappuserapi.shared;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class UserDto implements Serializable {
+    private static final long serialVersionUID = -953297098295050686L;
 
-@Entity
-@Table(name = "Users")
-public class UserEntity implements Serializable {
-
-    @Id
-    @GeneratedValue
-    private long id;
-    private static final long serialVersionUID = -2731425678149216053L;
-    @Column(nullable = false)
     private String firstName;
-    @Column(nullable = false)
     private String lastName;
-    @Column(nullable = false, unique = true)
     private String email;
-    @Column(nullable = false, unique = true)
+    private String password;
     private String userId;
-    @Column(nullable = false)
     private String encryptedPassword;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -59,6 +36,14 @@ public class UserEntity implements Serializable {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -74,5 +59,4 @@ public class UserEntity implements Serializable {
     public void setEncryptedPassword(String encryptedPassword) {
         this.encryptedPassword = encryptedPassword;
     }
-
 }

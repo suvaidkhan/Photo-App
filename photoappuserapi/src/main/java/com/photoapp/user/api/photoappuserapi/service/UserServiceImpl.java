@@ -2,23 +2,24 @@ package com.photoapp.user.api.photoappuserapi.service;
 
 import java.util.UUID;
 
+import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.photoapp.user.api.model.UserEntity;
-import com.photoapp.user.api.model.UserRepository;
-import com.photoapp.user.api.photoappuserapi.Shared.UserDto;
+import com.photoapp.user.api.photoappuserapi.data.UserEntity;
+import com.photoapp.user.api.photoappuserapi.data.UsersRepository;
+import com.photoapp.user.api.photoappuserapi.shared.UserDto;
 
 @Service
-public class UsersServiceImpl implements UsersService {
+public class UserServiceImpl implements UserService {
 
-    UserRepository userRepository;
+    UsersRepository usersRepository;
 
     @Autowired
-    public UsersServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserServiceImpl(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
     }
 
     @Override
@@ -26,10 +27,13 @@ public class UsersServiceImpl implements UsersService {
         userDetails.setUserId(UUID.randomUUID().toString());
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
         UserEntity userEntity = modelMapper.map(userDetails, UserEntity.class);
-        userEntity.setEncryptedPassword("encryptedPassword");
-        userRepository.save(userEntity);
-        return userDetails;
+        userEntity.setEncryptedPassword("test");
+
+        usersRepository.save(userEntity);
+        UserDto returnValue = modelMapper.map(userEntity, UserDto.class);
+        return returnValue;
     }
 
 }
