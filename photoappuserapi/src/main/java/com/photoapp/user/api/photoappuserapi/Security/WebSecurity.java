@@ -1,7 +1,9 @@
 package com.photoapp.user.api.photoappuserapi.Security;
 
+import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,11 +18,15 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     private UserService userService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private Environment environment;
 
     @Autowired
-    public WebSecurity(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public WebSecurity(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder, Environment environment,
+            AuthenticationManager authenticationManager) {
         this.userService = userService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.environment = environment;
+        super.setAuthenticationManager(authenticationManager);
     }
 
     @Override
@@ -32,9 +38,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
     }
 
-    private AuthenticationFilter  getAuthenticationFilter() throws Exception {
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter();
-        authenticationFilter.setAuthenticationManager(authenticationManager());
+    private AuthenticationFilter getAuthenticationFilter() throws Exception {
+        AuthenticationFilter authenticationFilter = new AuthenticationFilter(userService, environment,
+                authenticationManager());
+        // authenticationFilter.setAuthenticationManager(authenticationManager());
         return authenticationFilter;
     }
 
